@@ -8,7 +8,6 @@ import json, requests, os, time
 
 load_dotenv(verbose=True)
 app = Flask(__name__)
-datetime.now(timezone('Asia/Seoul'))
 
 @app.route('/', methods=["GET"])
 def init():
@@ -24,12 +23,12 @@ def searchnum():
     else:
         searchStation = request.form["station"]
     if request.form["time"] == "0":
-        now = datetime.now()
+        now = datetime.now(timezone('Asia/Seoul'))
         searchTime = now.strftime('%H%M')
     else:
         searchTime = request.form["time"]
     if request.form["day"] == "0":
-        now = datetime.now()
+        now = datetime.now(timezone('Asia/Seoul'))
         tmp = now.weekday()
         if tmp == 0:
             searchDay = "MON"
