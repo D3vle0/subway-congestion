@@ -2,10 +2,13 @@ from flask import Flask, render_template, request
 from datetime import datetime
 from dotenv import load_dotenv
 from bs4 import BeautifulSoup
+from pytz import timezone
+
 import json, requests, os, time
 
 load_dotenv(verbose=True)
 app = Flask(__name__)
+datetime.now(timezone('Asia/Seoul'))
 
 @app.route('/', methods=["GET"])
 def init():
