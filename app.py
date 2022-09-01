@@ -136,4 +136,4 @@ def realtime():
 
     return render_template("realtime.html", currentLocation=currentLocation)
 
-app.run(host="localhost",port=5001, debug=1)
+app.run(host="localhost",port=os.environ.get('PORT', 5001), debug=1)
