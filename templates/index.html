@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-round.css" rel="stylesheet">
+    <title>지하철</title>
+</head>
+<style>
+    body {
+        text-align: center;
+        font-family: 'NanumSquareRound';
+        max-width: 580px;
+        margin: 0 auto;
+    }
+
+    h1 {
+        margin-top: 10px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+</style>
+
+<body>
+    <nav class="navbar navbar-expand-lg" style="background-color: #367cff;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/" style="color: #fff;">🚅 지하철 혼잡도</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/" style="color: #fff;">통계성</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/realtime" style="color: #fff;">실시간</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/search" style="color: #fff;">역 번호 검색</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <h1>지하철 혼잡도 검색 (통계성)</h1>
+    <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <p>👋 도움말이 필요한가요?</p>
+    </a>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">도움말</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="text-align: left">
+                    👋 지하철 혼잡도 검색 사이트에 오신 것을 환영합니다!<br>
+                    이 사이트에서는 세 가지 서비스를 제공합니다.<br><br>
+                    <h5>1. 혼잡도 검색 (통계성)</h5>
+                    <p>특정 역사의 구간별 열차/칸 혼잡도를 제공합니다. 지하철 이용 패턴에 따른 통계적인 수치이므로 정확하지 않습니다.
+                        수도권 1~9호선 및 신분당선 모든 역사에 대한 데이터를 검색할 수 있습니다. 역명에는 '역' 까지 입력하지 않아도 자동완성 됩니다.</p>
+                    <h5>2. 혼잡도 검색 (실시간)</h5>
+                    <p>운행 중인 열차의 실시간 열차/칸 혼잡도를 제공합니다. 수도권 지하철 2호선 본선만 제공합니다. 조회를 원하는 열차를 클릭하면 됩니다.</p>
+                    <h5>3. 역번호 검색</h5>
+                    <p>혼잡도가 제공되는 역의 역 번호를 검색할 수 있습니다.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <form action="/" method="post">
+        <div class="input-group mb-3">
+            <span class="input-group-text">역명</span>
+            <input type="text" class="form-control" placeholder="ex) 서울역" name="station" required>
+        </div>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">시간대</label>
+            <select class="form-select" name="time" required>
+                <option value="0" selected>현재 시각</option>
+                <option value="0600">06:00</option>
+                <option value="0610">06:10</option>
+                <option value="0620">06:20</option>
+                <option value="0630">06:30</option>
+                <option value="0640">06:40</option>
+                <option value="0650">06:50</option>
+                <option value="0700">07:00</option>
+                <option value="0710">07:10</option>
+                <option value="0720">07:20</option>
+                <option value="0730">07:30</option>
+                <option value="0740">07:40</option>
+                <option value="0750">07:50</option>
+                <option value="0800">08:00</option>
+                <option value="0810">08:10</option>
+                <option value="0820">08:20</option>
+                <option value="0830">08:30</option>
+                <option value="0840">08:40</option>
+                <option value="0850">08:50</option>
+                <option value="0900">09:00</option>
+                <option value="0910">09:10</option>
+                <option value="0920">09:20</option>
+                <option value="0930">09:30</option>
+                <option value="0940">09:40</option>
+                <option value="0950">09:50</option>
+                <option value="1000">10:00</option>
+                <option value="1010">10:10</option>
+                <option value="1020">10:20</option>
+                <option value="1030">10:30</option>
+                <option value="1040">10:40</option>
+                <option value="1050">10:50</option>
+                <option value="1100">11:00</option>
+                <option value="1110">11:10</option>
+                <option value="1120">11:20</option>
+                <option value="1130">11:30</option>
+                <option value="1140">11:40</option>
+                <option value="1150">11:50</option>
+                <option value="1200">12:00</option>
+                <option value="1210">12:10</option>
+                <option value="1220">12:20</option>
+                <option value="1230">12:30</option>
+                <option value="1240">12:40</option>
+                <option value="1250">12:50</option>
+                <option value="1300">13:00</option>
+                <option value="1310">13:10</option>
+                <option value="1320">13:20</option>
+                <option value="1330">13:30</option>
+                <option value="1340">13:40</option>
+                <option value="1350">13:50</option>
+                <option value="1400">14:00</option>
+                <option value="1410">14:10</option>
+                <option value="1420">14:20</option>
+                <option value="1430">14:30</option>
+                <option value="1440">14:40</option>
+                <option value="1450">14:50</option>
+                <option value="1500">15:00</option>
+                <option value="1510">15:10</option>
+                <option value="1520">15:20</option>
+                <option value="1530">15:30</option>
+                <option value="1540">15:40</option>
+                <option value="1550">15:50</option>
+                <option value="1600">16:00</option>
+                <option value="1610">16:10</option>
+                <option value="1620">16:20</option>
+                <option value="1630">16:30</option>
+                <option value="1640">16:40</option>
+                <option value="1650">16:50</option>
+                <option value="1700">17:00</option>
+                <option value="1710">17:10</option>
+                <option value="1720">17:20</option>
+                <option value="1730">17:30</option>
+                <option value="1740">17:40</option>
+                <option value="1750">17:50</option>
+                <option value="1800">18:00</option>
+                <option value="1810">18:10</option>
+                <option value="1820">18:20</option>
+                <option value="1830">18:30</option>
+                <option value="1840">18:40</option>
+                <option value="1850">18:50</option>
+                <option value="1900">19:00</option>
+                <option value="1910">19:10</option>
+                <option value="1920">19:20</option>
+                <option value="1930">19:30</option>
+                <option value="1940">19:40</option>
+                <option value="1950">19:50</option>
+                <option value="2000">20:00</option>
+                <option value="2010">20:10</option>
+                <option value="2020">20:20</option>
+                <option value="2030">20:30</option>
+                <option value="2040">20:40</option>
+                <option value="2050">20:50</option>
+                <option value="2100">21:00</option>
+                <option value="2110">21:10</option>
+                <option value="2120">21:20</option>
+                <option value="2130">21:30</option>
+                <option value="2140">21:40</option>
+                <option value="2150">21:50</option>
+                <option value="2200">22:00</option>
+                <option value="2210">22:10</option>
+                <option value="2220">22:20</option>
+                <option value="2230">22:30</option>
+                <option value="2240">22:40</option>
+                <option value="2250">22:50</option>
+                <option value="2300">23:00</option>
+                <option value="2310">23:10</option>
+                <option value="2320">23:20</option>
+                <option value="2330">23:30</option>
+                <option value="2340">23:40</option>
+                <option value="2350">23:50</option>
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">요일</label>
+            <select class="form-select" name="day" required>
+                <option value="0" selected>현재 요일</option>
+                <option value="SUN">일</option>
+                <option value="MON">월</option>
+                <option value="TUE">화</option>
+                <option value="WED">수</option>
+                <option value="THU">목</option>
+                <option value="FRI">금</option>
+                <option value="SAT">토</option>
+            </select>
+        </div>
+        <input type="submit" class="btn btn-primary" value="검색">
+    </form>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+    crossorigin="anonymous"></script>
+
+</html>

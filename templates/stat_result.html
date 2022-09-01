@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-round.css" rel="stylesheet">
+    <title>지하철</title>
+</head>
+<style>
+    body {
+        text-align: center;
+        font-family: 'NanumSquareRound';
+        max-width: 580px;
+        margin: 0 auto;
+    }
+
+    h1 {
+        margin-top: 10px;
+    }
+
+    table,
+    td {
+        border: 1px solid #333;
+    }
+
+    @media (min-width: 580px) {
+        table {
+            width: 580px;
+        }
+    }
+
+    a {
+        text-decoration: none;
+    }
+</style>
+
+<body>
+    <nav class="navbar navbar-expand-lg" style="background-color: #367cff;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/" style="color: #fff;">🚅 지하철 혼잡도</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/" style="color: #fff;">통계성</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/realtime" style="color: #fff;">실시간</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/search" style="color: #fff;">역번호 검색</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <h1>지하철 혼잡도 검색 (통계성)</h1>
+    <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <p>👋 도움말이 필요한가요?</p>
+    </a>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">도움말</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="text-align: left">
+                    👋 지하철 혼잡도 검색 사이트에 오신 것을 환영합니다!<br>
+                    이 사이트에서는 세 가지 서비스를 제공합니다.<br><br>
+                    <h5>1. 혼잡도 검색 (통계성)</h5>
+                    <p>특정 역사의 구간별 열차/칸 혼잡도를 제공합니다. 지하철 이용 패턴에 따른 통계적인 수치이므로 정확하지 않습니다.
+                        수도권 1~9호선 및 신분당선 모든 역사에 대한 데이터를 검색할 수 있습니다. 역명에는 '역' 까지 입력하지 않아도 자동완성 됩니다.</p>
+                    <h5>2. 혼잡도 검색 (실시간)</h5>
+                    <p>운행 중인 열차의 실시간 열차/칸 혼잡도를 제공합니다. 수도권 지하철 2호선 본선만 제공합니다. 조회를 원하는 열차를 클릭하면 됩니다.</p>
+                    <h5>3. 역번호 검색</h5>
+                    <p>혼잡도가 제공되는 역의 역 번호를 검색할 수 있습니다.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <h4>{{searchTime[:2]}}:{{searchTime[2]}}0 시간대에 {{searchStation}}을 지나는 열차</h4>
+    {% for i in range(startStation|length) %}
+    <table style="table-layout: fixed;">
+        {% if "1" in metroLine[i] %}
+        <thead style="background-color: #0052A4; color: #fff;">
+        {% elif "2" in metroLine[i] %}
+        <thead style="background-color: #00A84D; color: #fff;">
+        {% elif "3" in metroLine[i] %}
+        <thead style="background-color: rgb(239, 124, 28); color: #fff;">
+        {% elif "4" in metroLine[i] %}
+        <thead style="background-color: rgb(41, 157, 213); color: #fff;">
+        {% elif "5" in metroLine[i] %}
+        <thead style="background-color: rgb(153, 108, 172); color: #fff;">
+        {% elif "6" in metroLine[i] %}
+        <thead style="background-color: #CD7C2F; color: #fff;">
+        {% elif "7" in metroLine[i] %}
+        <thead style="background-color: #747F00; color: #fff;">
+        {% elif "8" in metroLine[i] %}
+        <thead style="background-color: #E6186C; color: #fff;">
+        {% elif "9" in metroLine[i] %}
+        <thead style="background-color: rgb(125, 104, 57); color: #fff;">
+        {% elif "신분당" in metroLine[i] %}
+        <thead style="background-color: #D31145; color: #fff;">
+        {% endif %}
+            <tr>
+                <th colspan="10">{{startStation[i]}} -> {{endStation[i]}} ({{metroLine[i]}})</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for j in congestion[i] %}
+                {% if j < 60 %} <td style="background-color: rgb(38, 186, 22); color: #fff;">
+                    {{j}}%<br>{{(160*j/100)|round|int}}명</td>
+                    {% elif j >= 60 and j < 150 %} <td style="background-color: rgb(234, 136, 44); color: #fff;">
+                        {{j}}%<br>{{(160*j/100)|round|int}}명</td>
+                        {% elif j >= 150 %}
+                        <td style="background-color: rgb(255, 27, 27); color: #fff;">
+                            {{j}}%<br>{{(160*j/100)|round|int}}명</td>
+                        {% else %}
+                        <td>{{j}}%<br>{{(160*j/100)|round|int}}명</td>
+                        {% endif %}
+                        {% endfor%}
+            </tr>
+            <tr>
+                {% for j in range(1,11) %}
+                <td>{{j}}</td>
+                {% endfor%}
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    {% endfor%}
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+    crossorigin="anonymous"></script>
+</html>
