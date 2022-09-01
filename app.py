@@ -46,6 +46,8 @@ def searchnum():
             searchDay = "SAT"
         elif tmp == 7:
             searchDay = "SUN"
+    else:
+        searchDay = request.form["day"]
     station_code = []
     startStation=[]
     endStation=[]
@@ -97,7 +99,7 @@ def realtime():
 
         headers = {
             "Accept": "application/json",
-            "appkey": "l7xxa39ece64c70f4942a0836bccdc3b9bf6"
+            "appkey": os.getenv('APPKEY')
         }
 
         response = requests.get(url, headers=headers)
